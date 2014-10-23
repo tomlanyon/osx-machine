@@ -7,93 +7,127 @@ recipes:
 - sprout-homebrew
 
 # settings
-- sprout-osx-settings
+# sprout-osx-settings::default broken out
+# so I can disable some:
+- sprout-osx-settings::defaults_fast_key_repeat_rate
+- sprout-osx-settings::function_keys
+- sprout-osx-settings::global_environment_variables
+#- sprout-osx-settings::input_on_login
+#- sprout-osx-settings::inputrc
+- sprout-osx-settings::keyboard
+#- sprout-osx-settings::locate
+- sprout-osx-settings::machine_name
+- sprout-osx-settings::menubar
+#- sprout-osx-settings::screensaver
+#- sprout-osx-settings::screen_sharing
+- sprout-osx-settings::set_menubar_clock_format
+#- sprout-osx-settings::shared_memory
+#- sprout-osx-settings::snmpd
+- sprout-osx-settings::sshd_on
+- sprout-osx-settings::tcp_keepalive
+- sprout-osx-settings::timemachine
+#- sprout-osx-settings::updates
+# end of 'default' settings
 - sprout-osx-settings::dock_preferences
+- sprout-osx-settings::osx_disable_natural_scrolling
+- sprout-osx-settings::set_finder_show_user_home_in_sidebar
 - sprout-terminal
 - sprout-terminal::update_font
-- sprout-ssh::known_hosts_github
 
 # development (general)
+- sprout-ssh
 - sprout-base::workspace_directory
 - sprout-git
 - sprout-git::default_editor
 - sprout-git::projects
-- sprout-git::git_scripts
+#- sprout-git::git_scripts
 
 # development (rails)
-- sprout-rbenv
-- sprout-ruby
-- sprout-mysql
+#- sprout-rbenv
+#- sprout-ruby
+#- sprout-mysql
 - sprout-postgresql
 
 # apps
-- sprout-osx-apps::iterm2
-- sprout-osx-apps::flycut
-- sprout-osx-apps::shiftit
+#- sprout-osx-apps::iterm2
+#- sprout-osx-apps::flycut
+#- sprout-osx-apps::shiftit
 
 # apps (editors)
-- sprout-osx-apps::textmate_bundles
-- sprout-osx-apps::textmate_preferences
-- sprout-osx-apps::macvim
-- sprout-rubymine
+#- sprout-osx-apps::textmate_bundles
+#- sprout-osx-apps::textmate_preferences
+#- sprout-osx-apps::macvim
+#- sprout-rubymine
 
 node_attributes:
+  workspace_directory: 'dev'
+  function_keys:
+    use_function_keys_as_function_keys: false
   sprout:
     git:
-      domain: pivotallabs.com
+      domain: netspot.com.au
+      workspace_directory: 'dev'
       authors:
-        - initials: ah
-          name: Abhijit Hiremagalur
-          username: abhi
-        - initials: bc
-          name: Brian Cunnie
-          username: cunnie
-        - initials: jrhb
-          name: Jonathan Barnes
-        - initials: lw
-          name: Luke Winikates
-          username: lwinikates
       projects:
-        -
-          name: sprout-wrap
-          url: https://github.com/pivotal-sprout/sprout-wrap.git
+        - name: osx-machine
+          url: https://github.com/tomlanyon/osx-machine.git
+      aliases:
+        - 'lu log --graph --decorate --pretty=oneline --abbrev-commit HEAD..@{u}'
+        - 'la log --graph --decorate --pretty=oneline --abbrev-commit'
+        - 'gerrit-config-push config --local remote.gerrit.push HEAD:refs/for/master'
+        - 'gerrit-commit-msg !scp gerrit:hooks/commit-msg .git/hooks'
+      global_config:
+        'core.pager': '"less -FXRS"'
+        'apply.whitespace': 'nowarn'
+        'color.branch': 'auto'
+        'color.diff': 'auto'
+        'color.interactive': 'auto'
+        'color.status': 'auto'
+        'color.ui': 'auto'
+        'branch.autosetupmerge': 'true'
+        'merge.defaultToUpstream': 'true'
+        'push.default': 'upstream'
+        'rebase.autosquash': 'true'
     terminal:
       default_profile: 'Pro'
     settings:
-      clock_format: EEE MMM d  h:mm:ss a
+      clock_format: EEE d MMM  H:mm:ss
     dock_preferences:
-      orientation: 'left'
+      orientation: 'bottom'
       auto_hide: true
       clear_apps: true
-      tile_size: 35
-      magnification': false
+      tile_size: 16
+      largesize: 49
+      magnification': true
     homebrew:
       formulae:
-        - ctags-exuberant
-        - ag
-        - chromedriver
-        - imagemagick
+        - elasticsearch
+        - go
+        - ipv6calc
+        - lftp
+        - mtr
         - node
         - pstree
-        - qt
-        - ssh-copy-id
+        - pv
+        - pwgen
+        - qpdf
+        - sipcalc
         - tmux
+        - tnef
         - tree
         - watch
         - wget
-        - rbenv-binstubs
-        - rbenv-gem-rehash
+        - wireshark
       casks:
-        - ccmenu
-        - firefox
-        - gitx-rowanj
-        - github
+        - dropbox
         - google-chrome
         - google-drive
         - google-hangouts
+        - google-plus-auto-backup
+        - omnigraffle
         - skype
-        - textmate
+        - slack
+        - telephone
         - vagrant
         - virtualbox
         - xquartz
-        - xscope
